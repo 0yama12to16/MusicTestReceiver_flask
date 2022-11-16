@@ -38,6 +38,8 @@ def post2db(data):
     os.chdir('data')
     os.makedirs(str(songID), exist_ok=True)
     os.chdir('..')
+
+
     filename = 'data/' + str(songID) + '/' + doc_name + '.json'
     f = open(filename, 'w')
 
@@ -60,6 +62,41 @@ def post2db(data):
         'temp':temp,
         'temp_time':temp_time,
         'createdAt':createdAt
+    }
+
+    content_json = json.dumps(content)
+    
+
+    f.write(content_json)
+    f.close
+    return True
+
+def post2db_static(data):
+    subjectName = str(data["subjectName"])
+    subjectID = int(data["subjectID"])
+    songID = int(data["songID"])
+    subjectAge = data["subjectAge"]
+    staticArousal = int(data["staticArousal"])
+    staticValence = int(data["staticValence"])
+
+    #createdATはUTCタイムゾーンで取るため、日本時間とは九時間ずれてる
+    dt_now = datetime.datetime.now()
+    createdAt = f"{dt_now.year}_{dt_now.month}_{dt_now.day}_{dt_now.hour}_{dt_now.minute}_{dt_now.second}"
+    print(dt_now.year)
+
+    doc_name = f"{subjectID}-{songID}-{createdAt}" 
+
+    filename = 'data/' + "staticAnnotations" + '/' + doc_name + '.json'
+    f = open(filename, 'w')
+
+    content ={
+        'subjectName':subjectName,
+        'age':subjectAge,
+        'subjectID':subjectID,
+        'songID':songID,
+        'createdAt':createdAt,
+        'staticArousal':staticArousal,
+        'staticValence':staticValence
     }
 
     content_json = json.dumps(content)

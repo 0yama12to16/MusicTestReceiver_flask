@@ -12,5 +12,7 @@ print(lst1)
 os.chdir('data')
 for file in lst1:
     os.makedirs(file, exist_ok=True)
+
+os.makedirs("staticAnnotations", exist_ok= True)
     
 os.chdir('..')

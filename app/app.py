@@ -21,5 +21,10 @@ def getList():
     contents = {"musicList": musicList}
     return jsonify(contents)
 
-
+@app.route('/post_data_static', methods=['POST'])
+def check_static():
+    data = request.get_data().decode('utf-8')
+    data = json.loads(data)
+    if connectdb.post2db_static(data):
+        return "OK"
 
